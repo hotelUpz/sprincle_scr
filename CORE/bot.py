@@ -5,8 +5,7 @@
 
 import asyncio
 import time
-# from pathlib import Path
-# from typing import Dict, Set
+import os
 
 from c_log import UnifiedLogger
 from CORE.symbols import SymbolsCoordinator
@@ -51,23 +50,10 @@ class ASB:
         )
         self.market_streams.orderbook_enabled = True # FORCE orderbook on for arbitrage
         self.special_assets = SpecialAssetsRegistry(logger=self.logger)
+        
+        # Инициализация правил строго из нового файла
         self.signal_evaluator = SignalEvaluator(
-            rules_path=str(ROOT_DIR / "CONFIG" / "new_rules.json"), # Заменено на new_rules.json
-            logger=self.logger
-        )
-
-
-        # Core modules
-        self.symbols_coordinator = SymbolsCoordinator(logger=self.logger)
-        self.market_streams = MarketStreams(
-            logger=self.logger,
-            stakan_spread_pct_threshold=0.0,
-            stakan_ttl_sec=0.0
-        )
-        self.market_streams.orderbook_enabled = True # FORCE orderbook on for arbitrage
-        self.special_assets = SpecialAssetsRegistry(logger=self.logger)
-        self.signal_evaluator = SignalEvaluator(
-            rules_path=str(ROOT_DIR / "CONFIG" / "rules1.json"), 
+            rules_path=str(ROOT_DIR / "CONFIG" / "new_rules.json"),
             logger=self.logger
         )
         
@@ -75,7 +61,7 @@ class ASB:
         self.deduper = SignalDeduper(state_path=ROOT_DIR / "logs" / "dedup.json", logger=self.logger)
         tg_cfg = self.config["telegram"]
         self.tg_enabled = tg_cfg.get("enabled", True)
-        import os
+        
         # Инициализируем отправителя телеграм
         tg_interval = float(self.config["telegram"]["min_send_interval_sec"])
         self.tg_sender = TelegramSender(
@@ -167,9 +153,8 @@ class ASB:
             
             for category, rules in self.signal_evaluator.rules.items():
                 for pair_key, rule in rules.items():
-                    # Check if symbol category matches
-                    # First, identify the category of this base asset
                     base = canon.split("_")[0]
+                    # Классификация актива
                     asset_kind = self.special_assets.classify_base(base, ex1=rule.dominanta, ex2=rule.sliver)
                     
                     if category == "metall_assets" and asset_kind != "METAl":
@@ -225,7 +210,7 @@ class ASB:
         canon = signal["symbol"]
         rule = signal["rule"]
         
-        # Уникальный ключ теперь включает тип сигнала и сравнение
+        # Уникальный ключ теперь включает тип сигнала и сравнение (напр. bid_d/ask_s)
         dedup_key = f"{canon}_{rule.dominanta}_{rule.sliver}_{signal['signal_type']}_{signal['comparison']}_signal"
         if self.deduper.is_seen(dedup_key):
             return
@@ -236,7 +221,6 @@ class ASB:
         templates = self.config["telegram"]["templates"]
         template_str = templates[template_id]
 
-        # Для вывода информации о порогах используем параметры соответствующего типа
         if signal["signal_type"] == "Тип 1":
             req_ps = f"{rule.price1_spread.min_spread:.2f}%" if rule.price1_spread.enabled else "Off"
         else:
