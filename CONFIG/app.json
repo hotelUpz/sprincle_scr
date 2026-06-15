@@ -1,0 +1,31 @@
+{
+  "_file_header": "File: CONFIG/app.json | Role: Основная конфигурация бота (интервалы, шаблоны ТГ, активные биржи)",
+  "telegram": {
+    "enabled": true,
+    "startup_message": "🤖 <b>ASB</b> started!",
+    "min_send_interval_sec": 2.0,
+    "dedup_flush_sec": 1800,
+    "retry_max_attempts": 2,
+    "message_template_id": "1",
+    "templates": {
+      "1": "<b>#{symbol} ___ #{kind}</b>\n<b>{dom}</b> ↔ <b>{slv}</b>\n\n<b>Price Spread:</b> {price_spread:+.3f}% (Req: {req_price_spread})\n<b>Funding Spread:</b> {funding_spread:+.4f}% (Req: {req_funding_spread})\n\n<u>Funding Rates:</u>\n{dom} ({interval_d}): {fund_d:+.4f}% (in {ttf_d_str})\n{slv} ({interval_s}): {fund_s:+.4f}% (in {ttf_s_str})"
+    }
+  },
+  "runtime": {
+    "console_log_enabled": true,
+    "file_log_enabled": false,
+    "main_loop_poll_sec": 0.1,
+    "funding_loop_poll_sec": 5,
+    "symbols_update_loop_poll_sec": 60,
+    "quote": "USDT"
+  },
+  "exchanges": {
+    "enabled": [
+      "binance",
+      "phemex"
+    ]
+  },
+  "blacklist": [
+    "HOME"
+  ]
+}

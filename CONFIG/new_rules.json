@@ -1,0 +1,198 @@
+{
+    "_file_header": "File: CONFIG/rules1.json | Role: Правила торговой логики и пороги спредов по парам бирж",
+    "metall_assets": {
+        "_comment": {
+            "price1_spread": "Настройки ценового спреда сигнала типа1. min_spread выражен в абсолютном значении. при оценках на Long/Short нужно будет учитывать знаки.",
+            "price2_spread": "Настройки ценового спреда сигнала типа2. min_spread выражен в абсолютном значении. при оценках на Long/Short нужно будет учитывать знаки.",
+            "funding_spread": "Настройки фандингового спреда",
+            "still_one": "если true то достаточным условием будет условие хотя бы на одной из сравниваемых пар бирж. false -- ориентируемся на суммарный результативный дельта фандинг -- для отключенного фандинга не актуально.",
+            "across_funding": "1 - таймфреймы должны строго совпадать, 2 - таймфреймы должны строго различаться, 3 - не важно",
+            "source_of_trus": "bid1 и ask1 -- лучшие биды и аски стакана между биржами.",
+            "ttl_sec_control": "float | null. Время выдержки паттерна"
+        },
+        "binance-phemex": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "binance",
+            "ttl_sec_control": null
+        },
+        "binance-bitget": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "binance",
+            "ttl_sec_control": null
+        },
+        "phemex-bitget": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "bitget",
+            "ttl_sec_control": null
+        }
+    },
+    "action_assets": {
+        "binance-phemex": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "binance",
+            "ttl_sec_control": null
+        },
+        "binance-bitget": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "binance",
+            "ttl_sec_control": null
+        },
+        "phemex-bitget": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "bitget",
+            "ttl_sec_control": null
+        }
+    },
+    "other_assets": {
+        "binance-phemex": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "binance",
+            "ttl_sec_control": null
+        },
+        "binance-bitget": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "binance",
+            "ttl_sec_control": null
+        },
+        "phemex-bitget": {
+            "price1_spread": {
+                "enabled": true,
+                "min_spread": 1.0,
+                "source_of_trus": "bid1_ask1/ask1_bid1"
+            },
+            "price2_spread": {
+                "enabled": true,
+                "min_spread": 3.0,
+                "source_of_trus": "bid1_bid1/ask1_ask1"
+            },
+            "funding_spread": {
+                "enabled": false,
+                "min_spread": 0.2,
+                "still_one": true
+            },
+            "across_funding": "3",
+            "dominanta": "bitget",
+            "ttl_sec_control": null
+        }
+    }
+}
