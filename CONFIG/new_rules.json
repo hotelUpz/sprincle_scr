@@ -237,11 +237,11 @@
             "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
