@@ -1,13 +1,12 @@
 # ============================================================
 # File: CORE/signal_evaluator.py
-# Role: Вычисление спредов и оценка торговых сигналов по правилам
+# Role: Вычисление спредов и оценка торговых сигналов (Тип 1 и Тип 2)
 # ============================================================
 
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Optional, Tuple, List
-import time
+from typing import Dict, Optional, List
 from c_log import UnifiedLogger
 from consts import ENABLED_EXCHANGES
 
@@ -26,11 +25,11 @@ class FundingSpreadConfig:
 class RuleConfig:
     dominanta: str
     sliver: str
-    price_spread: PriceSpreadConfig
+    price1_spread: PriceSpreadConfig
+    price2_spread: PriceSpreadConfig
     funding_spread: FundingSpreadConfig
     across_funding: str
     ttl_sec_control: Optional[float]
-    source_of_trus: str
 
 class SignalEvaluator:
     def __init__(self, rules_path: str, logger: UnifiedLogger):
@@ -52,32 +51,25 @@ class SignalEvaluator:
                         if len(parts) != 2:
                             continue
                         
-                        dominanta = cfg["dominanta"].lower()
+                        dominanta = cfg.get("dominanta", parts[0]).lower()
                         sliver = parts[1] if parts[0].lower() == dominanta else parts[0]
                         sliver = sliver.lower()
 
                         if dominanta not in enabled_exchanges or sliver not in enabled_exchanges:
-                            self.logger.warning(f"[EVALUATOR] Skipping pair {pair_key} because {dominanta} or {sliver} is not enabled in app.json")
                             continue
                         
-                        pc = cfg["price_spread"]
-                        fc = cfg["funding_spread"]
+                        p1 = cfg.get("price1_spread", {"enabled": False, "min_spread": 0})
+                        p2 = cfg.get("price2_spread", {"enabled": False, "min_spread": 0})
+                        fc = cfg.get("funding_spread", {"enabled": False, "min_spread": 0, "still_one": False})
                         
                         self.rules[category][f"{dominanta}-{sliver}"] = RuleConfig(
                             dominanta=dominanta,
                             sliver=sliver,
-                            price_spread=PriceSpreadConfig(
-                                enabled=bool(pc["enabled"]),
-                                min_spread=float(pc["min_spread"])
-                            ),
-                            funding_spread=FundingSpreadConfig(
-                                enabled=bool(fc["enabled"]),
-                                min_spread=float(fc["min_spread"]),
-                                still_one=bool(fc["still_one"])
-                            ),
-                            across_funding=str(cfg["across_funding"]),
-                            ttl_sec_control=cfg["ttl_sec_control"],
-                            source_of_trus=cfg["source_of_trus"]
+                            price1_spread=PriceSpreadConfig(enabled=bool(p1["enabled"]), min_spread=float(p1["min_spread"])),
+                            price2_spread=PriceSpreadConfig(enabled=bool(p2["enabled"]), min_spread=float(p2["min_spread"])),
+                            funding_spread=FundingSpreadConfig(enabled=bool(fc["enabled"]), min_spread=float(fc["min_spread"]), still_one=bool(fc["still_one"])),
+                            across_funding=str(cfg.get("across_funding", "3")),
+                            ttl_sec_control=cfg.get("ttl_sec_control")
                         )
             self.logger.info(f"[EVALUATOR] Loaded rules from {self.rules_path.name}")
         except Exception as e:
@@ -87,46 +79,45 @@ class SignalEvaluator:
                  ask_d: float, bid_d: float, fund_d: float, ttf_d: float, 
                  ask_s: float, bid_s: float, fund_s: float, ttf_s: float,
                  interval_d: str, interval_s: str,
-                 rule: RuleConfig) -> Optional[dict]:
+                 rule: RuleConfig) -> List[dict]:
         
         af = rule.across_funding
-        
         try:
             val_d = float(interval_d)
-        except ValueError:
-            return
-            
-        try:
             val_s = float(interval_s)
         except ValueError:
-            return
+            return []
 
-        if af == "1":
-            if val_d != val_s:
-                return None
-        elif af == "2":
-            if val_d == val_s:
-                return None
-        
-        ps_long = (ask_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
-        ps_short = (bid_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
+        if af == "1" and val_d != val_s:
+            return []
+        elif af == "2" and val_d == val_s:
+            return []
 
-        pc = rule.price_spread
-        price_long_ok = not pc.enabled or (pc.enabled and ps_long >= pc.min_spread)
-        price_short_ok = not pc.enabled or (pc.enabled and ps_short <= -pc.min_spread)
+        # ТИП 1 (Перекрестные спреды: bid/ask и ask/bid)
+        ps_1a = (ask_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
+        ps_1b = (bid_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
 
-        fc = rule.funding_spread
+        # ТИП 2 (Прямые спреды: ask/ask и bid/bid)
+        ps_2a = (ask_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
+        ps_2b = (bid_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
+
         fund_delta = fund_d - fund_s
+        fc = rule.funding_spread
         
-        if fc.still_one:
-            fund_long_ok = not fc.enabled or (fc.enabled and (fund_d <= -fc.min_spread or fund_s <= - fc.min_spread))
-            fund_short_ok = not fc.enabled or (fc.enabled and (fund_d >= fc.min_spread or fund_s >= fc.min_spread))
-        else:
-            fund_long_ok = not fc.enabled or (fc.enabled and fund_delta <= -fc.min_spread)
-            fund_short_ok = not fc.enabled or (fc.enabled and fund_delta >= fc.min_spread)
+        # Проверка фандинга (если включена)
+        fund_ok = True
+        if fc.enabled:
+            if fc.still_one:
+                fund_ok = (abs(fund_d) >= fc.min_spread) or (abs(fund_s) >= fc.min_spread)
+            else:
+                fund_ok = abs(fund_delta) >= fc.min_spread
 
-        if not pc.enabled and not fc.enabled:
-            return None
+        if not rule.price1_spread.enabled and not rule.price2_spread.enabled:
+            return []
+
+        # Если фандинг обязателен, но не прошел — сигнала нет
+        if fc.enabled and not fund_ok:
+            return []
 
         base_signal = {
             "symbol": symbol,
@@ -137,23 +128,24 @@ class SignalEvaluator:
             "ttf_s": ttf_s,
             "interval_d": interval_d,
             "interval_s": interval_s,
-            "rule": rule
+            "rule": rule,
+            "funding_spread": fund_delta
         }
 
         results = []
 
-        if price_long_ok and fund_long_ok:
-            results.append({
-                **base_signal,
-                "price_spread": ps_long,
-                "funding_spread": fund_delta
-            })
+        # Оценка Тип 1
+        if rule.price1_spread.enabled:
+            if abs(ps_1a) >= rule.price1_spread.min_spread:
+                results.append({**base_signal, "signal_type": "Тип 1", "comparison": "ask_d/bid_s", "price_spread": ps_1a})
+            if abs(ps_1b) >= rule.price1_spread.min_spread:
+                results.append({**base_signal, "signal_type": "Тип 1", "comparison": "bid_d/ask_s", "price_spread": ps_1b})
 
-        if price_short_ok and fund_short_ok:
-            results.append({
-                **base_signal,
-                "price_spread": ps_short,
-                "funding_spread": fund_delta
-            })
-        
+        # Оценка Тип 2
+        if rule.price2_spread.enabled:
+            if abs(ps_2a) >= rule.price2_spread.min_spread:
+                results.append({**base_signal, "signal_type": "Тип 2", "comparison": "ask_d/ask_s", "price_spread": ps_2a})
+            if abs(ps_2b) >= rule.price2_spread.min_spread:
+                results.append({**base_signal, "signal_type": "Тип 2", "comparison": "bid_d/bid_s", "price_spread": ps_2b})
+
         return results

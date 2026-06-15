@@ -4,7 +4,6 @@
 # ============================================================
 
 from __future__ import annotations
-from typing import Optional
 
 def build_funding_signal_message(
     template_str: str,
@@ -12,6 +11,8 @@ def build_funding_signal_message(
     kind: str,
     dom: str,
     slv: str,
+    signal_type: str,
+    comparison: str,
     price_spread: float,
     funding_spread: float,
     req_price_spread: str,
@@ -37,8 +38,10 @@ def build_funding_signal_message(
             kind=kind,
             dom=dom.upper(),
             slv=slv.upper(),
+            signal_type=signal_type,
+            comparison=comparison,
             price_spread=price_spread,
-            funding_spread=funding_spread * -1,
+            funding_spread=funding_spread,
             req_price_spread=req_price_spread,
             req_funding_spread=req_funding_spread,
             fund_d=fund_d,

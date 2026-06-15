@@ -36,15 +36,13 @@ ASSET_KIND_ACTION = "ACTION"
 ASSET_KIND_OTHER = "USUAL"
 ENABLED_EXCHANGES = APP_CFG["exchanges"]["enabled"]
 
-SPECIAL_ASSETS_BASE_URL = SA_CFG["base_url"]
-SPECIAL_ASSETS_CACHE_FILE = SA_CFG["cache_file"]
-SPECIAL_ASSETS_FALLBACK_ACTION_BASES = SA_CFG["fallback_actions_bases"]
-SPECIAL_ASSETS_FALLBACK_METAL_BASES = SA_CFG["fallback_metal_bases"]
-SPECIAL_ASSETS_FORCE_USUAL_BASES = SA_CFG["force_usual_bases"]
-SPECIAL_ASSETS_METAL_CATEGORIES = SA_CFG["metal_categories"]
-SPECIAL_ASSETS_STOCK_CATEGORIES = SA_CFG["stock_categories"]
-SPECIAL_ASSETS_REFRESH_EVERY_SEC = SA_CFG["refresh_every_sec"]
-SPECIAL_ASSETS_TIMEOUT_SEC = SA_CFG["request_timeout_sec"]
+# Мы удалили base_url, stock_categories и metal_categories, так как они относились к CoinGecko
+SPECIAL_ASSETS_CACHE_FILE = SA_CFG.get("cache_file", "special_assets_cache.json")
+SPECIAL_ASSETS_FALLBACK_ACTION_BASES = SA_CFG.get("fallback_actions_bases", [])
+SPECIAL_ASSETS_FALLBACK_METAL_BASES = SA_CFG.get("fallback_metal_bases", [])
+SPECIAL_ASSETS_FORCE_USUAL_BASES = SA_CFG.get("force_usual_bases", [])
+SPECIAL_ASSETS_REFRESH_EVERY_SEC = SA_CFG.get("refresh_every_sec", 10800)
+SPECIAL_ASSETS_TIMEOUT_SEC = SA_CFG.get("request_timeout_sec", 10)
 
 def canonical_pair_rule_key(ex1: str, ex2: str) -> str:
     parts = sorted([ex1.lower(), ex2.lower()])

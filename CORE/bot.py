@@ -5,8 +5,8 @@
 
 import asyncio
 import time
-from pathlib import Path
-from typing import Dict, Set
+# from pathlib import Path
+# from typing import Dict, Set
 
 from c_log import UnifiedLogger
 from CORE.symbols import SymbolsCoordinator
@@ -21,6 +21,7 @@ from consts import APP_CFG, ROOT_DIR
 from API.BINANCE.client import BinanceClient
 from API.BITGET.client import BitgetClient
 from API.PHEMEX.client import PhemexClient
+from API.KUCOIN.client import KucoinClient
 
 class ASB:
     def __init__(self, logger: UnifiedLogger):
@@ -38,6 +39,23 @@ class ASB:
             self.exchanges.append(PhemexClient(logger=self.logger))
         if "bitget" in enabled:
             self.exchanges.append(BitgetClient(logger=self.logger))
+        if "kucoin" in enabled:
+            self.exchanges.append(KucoinClient(logger=self.logger))
+
+        # Core modules
+        self.symbols_coordinator = SymbolsCoordinator(logger=self.logger)
+        self.market_streams = MarketStreams(
+            logger=self.logger,
+            stakan_spread_pct_threshold=0.0,
+            stakan_ttl_sec=0.0
+        )
+        self.market_streams.orderbook_enabled = True # FORCE orderbook on for arbitrage
+        self.special_assets = SpecialAssetsRegistry(logger=self.logger)
+        self.signal_evaluator = SignalEvaluator(
+            rules_path=str(ROOT_DIR / "CONFIG" / "new_rules.json"), # Заменено на new_rules.json
+            logger=self.logger
+        )
+
 
         # Core modules
         self.symbols_coordinator = SymbolsCoordinator(logger=self.logger)
@@ -206,7 +224,9 @@ class ASB:
     async def _process_signal(self, signal):
         canon = signal["symbol"]
         rule = signal["rule"]
-        dedup_key = f"{canon}_{rule.dominanta}_{rule.sliver}_signal"
+        
+        # Уникальный ключ теперь включает тип сигнала и сравнение
+        dedup_key = f"{canon}_{rule.dominanta}_{rule.sliver}_{signal['signal_type']}_{signal['comparison']}_signal"
         if self.deduper.is_seen(dedup_key):
             return
             
@@ -216,7 +236,12 @@ class ASB:
         templates = self.config["telegram"]["templates"]
         template_str = templates[template_id]
 
-        req_ps = f"{rule.price_spread.min_spread:.2f}%" if rule.price_spread.enabled else "Off"
+        # Для вывода информации о порогах используем параметры соответствующего типа
+        if signal["signal_type"] == "Тип 1":
+            req_ps = f"{rule.price1_spread.min_spread:.2f}%" if rule.price1_spread.enabled else "Off"
+        else:
+            req_ps = f"{rule.price2_spread.min_spread:.2f}%" if rule.price2_spread.enabled else "Off"
+            
         req_fs = f"{rule.funding_spread.min_spread:.2f}%" if rule.funding_spread.enabled else "Off"
 
         msg = build_funding_signal_message(
@@ -225,6 +250,8 @@ class ASB:
             kind=signal["category"],
             dom=rule.dominanta,
             slv=rule.sliver,
+            signal_type=signal["signal_type"],
+            comparison=signal["comparison"],
             price_spread=signal["price_spread"],
             funding_spread=signal["funding_spread"],
             req_price_spread=req_ps,
