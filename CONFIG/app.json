@@ -8,7 +8,7 @@
     "retry_max_attempts": 2,
     "message_template_id": "1",
     "templates": {
-      "1": "<b>#{symbol} ___ {kind}</b>\n<b>{dom}</b> ↔ <b>{slv}</b>\n<b>Сигнал:</b> {signal_type} ({comparison})\n\n<b>Спред:</b> {price_spread:+.3f}% (Req: {req_price_spread})\n\n💡 <u>Funding Info:</u>\n<b>Spread:</b> {funding_spread:+.4f}% (Req: {req_funding_spread})\n{dom} ({interval_d}): {fund_d:+.4f}% (in {ttf_d_str})\n{slv} ({interval_s}): {fund_s:+.4f}% (in {ttf_s_str})"
+      "1": "<b>#{symbol} ___ {kind}</b>\n👑 <b>{dom}</b> (Доминанта) ↔ {slv}\n<b>Сигнал:</b> {signal_type} ({comparison})\n\n<b>Спред:</b> {price_spread:+.3f}% (Req: {req_price_spread})\n\n💡 <u>Funding Info:</u>\n<b>Spread:</b> {funding_spread:+.4f}% (Req: {req_funding_spread})\n{dom} ({interval_d}): {fund_d:+.4f}% (in {ttf_d_str})\n{slv} ({interval_s}): {fund_s:+.4f}% (in {ttf_s_str})"
     }
   },
   "runtime": {

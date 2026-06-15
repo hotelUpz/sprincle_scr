@@ -2,13 +2,14 @@
     "_file_header": "File: CONFIG/new_rules.json | Role: Правила торговой логики для Тип 1 и Тип 2",
     "metall_assets": {
         "binance-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -20,13 +21,14 @@
             "ttl_sec_control": null
         },
         "binance-bitget": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -38,13 +40,14 @@
             "ttl_sec_control": null
         },
         "binance-kucoin": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -56,13 +59,14 @@
             "ttl_sec_control": null
         },
         "bitget-kucoin": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -74,13 +78,14 @@
             "ttl_sec_control": null
         },
         "bitget-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -92,13 +97,14 @@
             "ttl_sec_control": null
         },
         "kucoin-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -112,13 +118,14 @@
     },
     "action_assets": {
         "binance-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -130,13 +137,14 @@
             "ttl_sec_control": null
         },
         "binance-bitget": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -148,13 +156,14 @@
             "ttl_sec_control": null
         },
         "binance-kucoin": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -166,13 +175,14 @@
             "ttl_sec_control": null
         },
         "bitget-kucoin": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -184,13 +194,14 @@
             "ttl_sec_control": null
         },
         "bitget-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -202,13 +213,14 @@
             "ttl_sec_control": null
         },
         "kucoin-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -222,6 +234,7 @@
     },
     "other_assets": {
         "binance-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 0.5
@@ -240,13 +253,14 @@
             "ttl_sec_control": null
         },
         "binance-bitget": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -258,13 +272,14 @@
             "ttl_sec_control": null
         },
         "binance-kucoin": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -276,13 +291,14 @@
             "ttl_sec_control": null
         },
         "bitget-kucoin": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -294,13 +310,14 @@
             "ttl_sec_control": null
         },
         "bitget-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
@@ -312,13 +329,14 @@
             "ttl_sec_control": null
         },
         "kucoin-phemex": {
+            "enabled": true,
             "price1_spread": {
                 "enabled": true,
-                "min_spread": 0.5
+                "min_spread": 1.0
             },
             "price2_spread": {
                 "enabled": true,
-                "min_spread": 0.75
+                "min_spread": 3.0
             },
             "funding_spread": {
                 "enabled": false,
