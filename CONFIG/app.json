@@ -27,6 +27,21 @@
       "phemex"
     ]
   },
+  "special_assets": {
+    "cache_file": "special_assets_cache.json",
+    "refresh_every_sec": 10800,
+    "request_timeout_sec": 10,
+    "force_usual_bases": [
+      "STRK",
+      "STX",
+      "DASH",
+      "COIN",
+      "A",
+      "ACX",
+      "TON",
+      "SOON"
+    ]
+  },
   "blacklist": [
     "HOME"
   ]
