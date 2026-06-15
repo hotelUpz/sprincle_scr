@@ -252,7 +252,7 @@ class ASB:
             asyncio.create_task(self.tg_sender.send_message(msg))
 
     async def run_forever(self):
-        self.logger.info("[BOT] Starting ASB...")
+        self.logger.info("[BOT] Starting Prices Spreads...")
         
         if getattr(self, "tg_enabled", True):
             startup_msg = self.config["telegram"].get("startup_message", "🤖 <b>ASB</b> started successfully!")
