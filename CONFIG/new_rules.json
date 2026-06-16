@@ -18,7 +18,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "binance-bitget": {
             "enabled": false,
@@ -37,7 +37,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "binance-kucoin": {
             "enabled": false,
@@ -56,7 +56,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "bitget-kucoin": {
             "enabled": false,
@@ -75,7 +75,7 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "bitget-phemex": {
             "enabled": false,
@@ -94,7 +94,7 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "kucoin-phemex": {
             "enabled": false,
@@ -113,7 +113,7 @@
             },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         }
     },
     "action_assets": {
@@ -134,7 +134,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "binance-bitget": {
             "enabled": false,
@@ -153,7 +153,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "binance-kucoin": {
             "enabled": false,
@@ -172,7 +172,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "bitget-kucoin": {
             "enabled": false,
@@ -191,7 +191,7 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "bitget-phemex": {
             "enabled": false,
@@ -210,7 +210,7 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "kucoin-phemex": {
             "enabled": false,
@@ -229,7 +229,7 @@
             },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         }
     },
     "other_assets": {
@@ -250,7 +250,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "binance-bitget": {
             "enabled": false,
@@ -269,7 +269,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "binance-kucoin": {
             "enabled": false,
@@ -288,7 +288,7 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "bitget-kucoin": {
             "enabled": false,
@@ -307,7 +307,7 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "bitget-phemex": {
             "enabled": false,
@@ -326,7 +326,7 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         },
         "kucoin-phemex": {
             "enabled": false,
@@ -345,7 +345,7 @@
             },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": 3.0
+            "ttl_sec_control": 5.0
         }
     }
 }
