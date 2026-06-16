@@ -18,10 +18,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "binance-bitget": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -37,10 +37,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "binance-kucoin": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -56,10 +56,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "bitget-kucoin": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -75,10 +75,10 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "bitget-phemex": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -94,10 +94,10 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "kucoin-phemex": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -113,7 +113,7 @@
             },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         }
     },
     "action_assets": {
@@ -134,10 +134,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "binance-bitget": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -153,10 +153,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "binance-kucoin": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -172,10 +172,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "bitget-kucoin": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -191,10 +191,10 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "bitget-phemex": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -210,10 +210,10 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "kucoin-phemex": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -229,7 +229,7 @@
             },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         }
     },
     "other_assets": {
@@ -250,10 +250,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "binance-bitget": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -269,10 +269,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "binance-kucoin": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -288,10 +288,10 @@
             },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "bitget-kucoin": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -307,10 +307,10 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "bitget-phemex": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -326,10 +326,10 @@
             },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         },
         "kucoin-phemex": {
-            "enabled": true,
+            "enabled": false,
             "price1_spread": {
                 "enabled": true,
                 "min_spread": 1.0
@@ -345,7 +345,7 @@
             },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": null
+            "ttl_sec_control": 3.0
         }
     }
 }
