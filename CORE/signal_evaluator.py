@@ -110,6 +110,28 @@ class SignalEvaluator:
         except Exception as e:
             self.logger.error(f"[EVALUATOR] Error loading rules: {e}")
 
+    def check_stakan_pattern(self, rule: RuleConfig, bid_s: float, ask_s: float, ask_d: float, bid_d: float) -> bool:
+        """
+        Проверяет стакан-паттерн.
+        Возвращает True, если паттерн соблюдается или проверка не требуется, иначе False.
+        """
+        if not rule or getattr(rule, 'stakan_pattern', None) is None or not rule.stakan_pattern.enabled:
+            return True
+
+        min_rate = rule.stakan_pattern.min_spread_to_distdenom_rate
+        if min_rate is None:
+            return True
+
+        if any(price is None for price in (bid_s, ask_s, ask_d, bid_d)):
+            return False
+
+        distdenom_rate = bid_s - ask_s
+        if distdenom_rate == 0:
+            return False
+
+        max_delta = max(abs(ask_d - bid_s), abs(bid_d - ask_s))
+        return (max_delta / abs(distdenom_rate)) >= min_rate
+
     def evaluate(self, symbol: str, category: str, 
                  ask_d: float, bid_d: float, fund_d: float, ttf_d: float, 
                  ask_s: float, bid_s: float, fund_s: float, ttf_s: float,
@@ -117,90 +139,72 @@ class SignalEvaluator:
                  rule: RuleConfig) -> List[dict]:
         
         self._check_reload()
-        now = time.time()
         
-        af = rule.across_funding
+        # 1. Парсинг интервалов и проверка across_funding
         try:
-            val_d = float(interval_d)
-            val_s = float(interval_s)
-        except ValueError:
+            val_d, val_s = float(interval_d), float(interval_s)
+        except (ValueError, TypeError):
             return []
 
-        if af == "1" and val_d != val_s:
+        af = rule.across_funding
+        if (af == "1" and val_d != val_s) or (af == "2" and val_d == val_s):
             return []
-        elif af == "2" and val_d == val_s:
+
+        # 2. Ранний выход: если оба типа спредов отключены — дальше считать бессмысленно
+        p1, p2 = rule.price1_spread, rule.price2_spread
+        if not p1.enabled and not p2.enabled:
             return []
 
-        # ТИП 1 (Перекрестные спреды)
-        ps_1a = (ask_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
-        ps_1b = (bid_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
-
-        # ТИП 2 (Прямые спреды)
-        ps_2a = (ask_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
-        ps_2b = (bid_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
-
+        # 3. Проверка фандинга
         fund_delta = fund_d - fund_s
         fc = rule.funding_spread
         
-        fund_ok = True
         if fc.enabled:
             if fc.still_one:
-                fund_ok = (abs(fund_d) >= fc.min_spread) or (abs(fund_s) >= fc.min_spread)
+                fund_ok = abs(fund_d) >= fc.min_spread or abs(fund_s) >= fc.min_spread
             else:
                 fund_ok = abs(fund_delta) >= fc.min_spread
+                
+            if not fund_ok:
+                return []
 
-        if not rule.price1_spread.enabled and not rule.price2_spread.enabled:
-            return []
+        # 4. Расчет спредов
+        # ТИП 1 (Перекрестные)
+        ps_1a = (ask_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
+        ps_1b = (bid_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
 
-        if fc.enabled and not fund_ok:
-            return []
+        # ТИП 2 (Прямые)
+        ps_2a = (ask_d / ask_s - 1.0) * 100.0 if ask_s > 0 else 0.0
+        ps_2b = (bid_d / bid_s - 1.0) * 100.0 if bid_s > 0 else 0.0
 
-        if rule.stakan_pattern.enabled:
-            min_spread_to_distdenom_rate = rule.stakan_pattern.min_spread_to_distdenom_rate
-
-            distdenom_rate = bid_s - ask_s
-            ps_1a_delta = abs(ask_d - bid_s)
-            ps_1b_delta = abs(bid_d - ask_s)
-            spread_to_distdenom_rate1 = abs(ps_1a_delta / distdenom_rate)
-            spread_to_distdenom_rate2 = abs(ps_1b_delta / distdenom_rate)
-            spread_to_distdenom_rate_max = max(spread_to_distdenom_rate1, spread_to_distdenom_rate2)
-
-            skip_distdenom_rat = (
-                min_spread_to_distdenom_rate is not None and
-                spread_to_distdenom_rate_max < min_spread_to_distdenom_rate
-            )
-
-            if skip_distdenom_rat: return []
-
+        # 5. Подготовка к генерации сигналов
+        now = time.time()
+        req_ttl = rule.ttl_sec_control or 0.0
+        results = []
+        
         base_signal = {
-            "symbol": symbol,
-            "category": category,
-            "fund_d": fund_d,
-            "fund_s": fund_s,
-            "ttf_d": ttf_d,
-            "ttf_s": ttf_s,
-            "interval_d": interval_d,
-            "interval_s": interval_s,
-            "rule": rule,
-            "funding_spread": fund_delta
+            "symbol": symbol, "category": category,
+            "fund_d": fund_d, "fund_s": fund_s,
+            "ttf_d": ttf_d, "ttf_s": ttf_s,
+            "interval_d": interval_d, "interval_s": interval_s,
+            "rule": rule, "funding_spread": fund_delta
         }
 
-        results = []
-        req_ttl = rule.ttl_sec_control or 0.0
-
         def evaluate_condition(key: str, spread: float, is_enabled: bool, min_spread: float, sig_type: str, comp: str):
-            # Если выключено или спред упал ниже нормы — удаляем из стейта (сброс таймера)
+            # Если выключено или спред упал ниже нормы — выкидываем из стейта (сброс)
             if not is_enabled or abs(spread) < min_spread:
                 self._condition_state.pop(key, None)
                 return
+
+            # Проверка стакана ТОЛЬКО для Типа 1 (тут была синтаксическая ошибка с аннотациями)
+            if sig_type == "Тип 1":
+                if not self.check_stakan_pattern(rule, bid_s, ask_s, ask_d, bid_d): 
+                    return
             
-            # Если пересечение произошло впервые — запоминаем время
-            if key not in self._condition_state:
-                self._condition_state[key] = now
+            # Фиксация времени. setdefault возвращает существующее значение или записывает `now`, если ключа нет.
+            first_seen = self._condition_state.setdefault(key, now)
+            elapsed = now - first_seen
             
-            elapsed = now - self._condition_state[key]
-            
-            # Выдаем сигнал только если выдержали нужное время TTL
             if elapsed >= req_ttl:
                 results.append({
                     **base_signal, 
@@ -210,10 +214,12 @@ class SignalEvaluator:
                     "elapsed_sec": elapsed
                 })
 
-        # Уникальные ключи для каждой комбинации
-        evaluate_condition(f"{symbol}_{rule.dominanta}_{rule.sliver}_1a", ps_1a, rule.price1_spread.enabled, rule.price1_spread.min_spread, "Тип 1", "ask_d/bid_s")
-        evaluate_condition(f"{symbol}_{rule.dominanta}_{rule.sliver}_1b", ps_1b, rule.price1_spread.enabled, rule.price1_spread.min_spread, "Тип 1", "bid_d/ask_s")
-        evaluate_condition(f"{symbol}_{rule.dominanta}_{rule.sliver}_2a", ps_2a, rule.price2_spread.enabled, rule.price2_spread.min_spread, "Тип 2", "ask_d/ask_s")
-        evaluate_condition(f"{symbol}_{rule.dominanta}_{rule.sliver}_2b", ps_2b, rule.price2_spread.enabled, rule.price2_spread.min_spread, "Тип 2", "bid_d/bid_s")
+        # 6. Оценка уникальных комбинаций (убрано дублирование sig_type в вызове)
+        prefix = f"{symbol}_{rule.dominanta}_{rule.sliver}"
+        
+        evaluate_condition(f"{prefix}_1a", ps_1a, p1.enabled, p1.min_spread, "Тип 1", "ask_d/bid_s")
+        evaluate_condition(f"{prefix}_1b", ps_1b, p1.enabled, p1.min_spread, "Тип 1", "bid_d/ask_s")
+        evaluate_condition(f"{prefix}_2a", ps_2a, p2.enabled, p2.min_spread, "Тип 2", "ask_d/ask_s")
+        evaluate_condition(f"{prefix}_2b", ps_2b, p2.enabled, p2.min_spread, "Тип 2", "bid_d/bid_s")
 
         return results
