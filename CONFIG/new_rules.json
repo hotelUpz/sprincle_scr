@@ -16,9 +16,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "binance-bitget": {
             "enabled": false,
@@ -35,9 +39,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "binance-kucoin": {
             "enabled": false,
@@ -54,9 +62,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "bitget-kucoin": {
             "enabled": false,
@@ -73,9 +85,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "bitget-phemex": {
             "enabled": false,
@@ -92,9 +108,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "kucoin-phemex": {
             "enabled": false,
@@ -111,9 +131,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         }
     },
     "action_assets": {
@@ -132,9 +156,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "binance-bitget": {
             "enabled": false,
@@ -151,9 +179,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "binance-kucoin": {
             "enabled": false,
@@ -170,9 +202,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "bitget-kucoin": {
             "enabled": false,
@@ -189,9 +225,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "bitget-phemex": {
             "enabled": false,
@@ -208,9 +248,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "kucoin-phemex": {
             "enabled": false,
@@ -227,9 +271,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         }
     },
     "other_assets": {
@@ -248,9 +296,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "binance-bitget": {
             "enabled": false,
@@ -267,9 +319,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "binance-kucoin": {
             "enabled": false,
@@ -286,9 +342,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "binance",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "bitget-kucoin": {
             "enabled": false,
@@ -305,9 +365,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "bitget-phemex": {
             "enabled": false,
@@ -324,9 +388,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "bitget",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         },
         "kucoin-phemex": {
             "enabled": false,
@@ -343,9 +411,13 @@
                 "min_spread": 0.2,
                 "still_one": true
             },
+            "stakan_pattern": {
+                "enabled": true,
+                "min_spread_to_distdenom_rate": 2.0
+            },
             "across_funding": "3",
             "dominanta": "kucoin",
-            "ttl_sec_control": 5.0
+            "ttl_sec_control": 20.0
         }
     }
 }
